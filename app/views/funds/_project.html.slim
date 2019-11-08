@@ -1,0 +1,31 @@
+
+- monthly_expenses = project[:expenses].present? ? project[:expenses].inject(0) { |sum, expense| sum + expense[:monthly] } : 0
+
+.title
+  .right.floated.content
+    - if monthly_expenses.zero?
+      | -
+    - else
+      = number_to_currency monthly_expenses, unit: '£'
+      | /month
+
+  i.dropdown.icon
+  = project[:name]
+.content
+  p: a href=project[:url]
+    = URI.parse(project[:url]).host
+
+  p = project[:description]
+
+  - if project[:expenses].present?
+    table.ui.very.basic.small.compact.table
+      thead
+        tr
+          th Project Expenses
+          th.collapsing
+            = number_to_currency monthly_expenses, unit: '£'
+      tbody
+        = render partial: 'funds/expense', collection: project[:expenses], cached: true
+  - else
+    .ui.divider
+    | This project has no current expenses.

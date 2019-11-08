@@ -1,0 +1,6 @@
+
+tr
+  td
+    .header = expense[:name]
+    .description = expense[:description]
+  td.top.aligned = number_to_currency expense[:monthly], unit: '£'

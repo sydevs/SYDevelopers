@@ -1,0 +1,13 @@
+
+a.card href=project[:url] target='_blank'
+  .image
+    - if project[:icon].present?
+      img src=project[:icon][0][:url]
+    - else
+      img src=image_path('blank.png')
+  .content
+    .header
+      = project[:name]
+      .sub.header
+        = URI.parse(project[:url]).host
+    .description = project[:description]

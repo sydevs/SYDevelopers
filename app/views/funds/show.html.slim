@@ -1,0 +1,22 @@
+
+.ui.text.container
+  .ui.header
+    a.ui.right.floated.button href=launch_url
+      i.rocket.icon
+      | Launchpad
+    .ui.pink.right.floated.button
+      i.heart.icon
+      | Donate
+    | Sahaj Web Projects
+    .sub.header Fundraising for various online web projects
+  
+  .ui.active.pink.progress data-value='42' data-total='100'
+    .bar
+      .progress
+    .label
+      | £14.84 raised for November 2020
+
+  .ui.hidden.divider
+
+  .ui.styled.fluid.accordion
+    = render partial: 'funds/project', collection: @projects, cached: true
