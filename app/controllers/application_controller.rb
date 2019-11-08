@@ -3,22 +3,29 @@ class ApplicationController < ActionController::Base
   before_action :init_airtable!
 
   def funds
+    expires_in 10.minutes
     projects_table = @client.table(ENV['AIRTABLE_BASE'], 'Projects')
     expenses_table = @client.table(ENV['AIRTABLE_BASE'], 'Expenses')
-    @projects = projects_table.select(formula: "Type = 'Internal'")
-    
-    @projects.each do |project|
-      if project[:expenses].present?
-        project[:expenses] = expenses_table.select(formula: "FIND(RECORD_ID(), \"#{project[:expenses].join(',')}\") != 0", sort: ['Monthly', :desc]) 
-      else
-        project[:expenses] = []
+
+    @projects = Rails.cache.fetch('airtable-projects', expires_in: 10.minutes) do
+      projects = projects_table.select(formula: "Type = 'Internal'")
+      
+      projects.each do |project|
+        if project[:expenses].present?
+          project[:expenses] = expenses_table.select(formula: "FIND(RECORD_ID(), \"#{project[:expenses].join(',')}\") != 0", sort: ['Monthly', :desc]) 
+        else
+          project[:expenses] = []
+        end
       end
+
+      projects
     end
 
     render 'funds/show'
   end
 
   def launch
+    expires_in 1.week
     category_order = ['Public Websites', 'Resources', 'Mobile Apps', 'Services']
     projects_table = @client.table(ENV['AIRTABLE_BASE'], 'Projects')
     @projects = projects_table.select(formula: "AND(NOT(Type = ''), NOT(URL = ''), NOT(Category = ''))")
