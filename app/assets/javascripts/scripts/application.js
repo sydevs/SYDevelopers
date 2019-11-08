@@ -2,6 +2,7 @@
 $(document).on('turbolinks:load', function() {
   console.log("Initialize JavaScript")
   $('.ui.accordion').accordion()
+  $('.ui.dropdown').dropdown()
   $('.ui.progress').progress()
   $('.ui.scrollspy.menu').visibility({ type: 'fixed', offset: 15 })
 
@@ -21,4 +22,10 @@ $(document).on('turbolinks:load', function() {
       }
     },
   })
+
+  $('.message .close').on('click', function() {
+    $(this).closest('.message').transition('fade')
+  })
+
+  window.history.replaceState({}, document.title, window.location.pathname)
 })

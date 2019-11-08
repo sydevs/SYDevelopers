@@ -14,7 +14,7 @@ gem 'turbolinks', '~> 5' # Turbolinks makes navigating your web application fast
 gem 'bootsnap', '>= 1.1.0', require: false # Reduces boot times through caching; required in config/boot.rb
 
 gem 'fomantic-ui-sass' # Use Fomantic/Semantic as css framework
-gem 'stripe' # Use Stripe for payment processing and data
+gem 'stripe-rails' # Use Stripe for payment processing and data
 gem 'airtable' # Use Airtable as the database
 
 group :development, :test do
