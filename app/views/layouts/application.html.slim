@@ -2,7 +2,7 @@ doctype html
 html
   head
     meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
-    title SY Developers
+    title = content_for?(:title) ? content_for(:title) : 'SY Developers'
     meta content='width=device-width,initial-scale=1' name='viewport'
     = render 'layouts/favicons'
     = csrf_meta_tags

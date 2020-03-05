@@ -5,4 +5,7 @@ Rails.application.routes.draw do
   get :launch, to: 'application#launch'
   get :funds, to: 'application#funds'
   get :prepare_stripe, to: 'application#prepare_stripe'
+
+  get :wemeditate, to: 'application#wemeditate'
+  get :atlas, to: 'application#atlas'
 end

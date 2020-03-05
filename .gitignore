@@ -13,7 +13,6 @@
 !/log/.keep
 !/tmp/.keep
 
-
 /node_modules
 /yarn-error.log
 
@@ -24,3 +23,5 @@
 /config/master.key
 .env.local
 .env.development.local
+
+.DS_Store

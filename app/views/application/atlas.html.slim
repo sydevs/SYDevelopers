@@ -1,0 +1,42 @@
+
+- content_for(:title, "About Sahaj Atlas")
+
+.project
+  .project__header
+    .ui.circular.bordered.tiny.image
+      = image_tag('sahaj-atlas/logo.png')
+    h1.ui.sub.header
+      | The Sahaj Atlas Project
+    p: a href='//atlas.sydevelopers.com' target='_blank' atlas.sydevelopers.com
+
+  .ui.text.container
+    p This is a project to develop a central repository of all Sahaj public programs.
+
+    = image_tag('sahaj-atlas/connected-world.svg', class: 'ui medium right floated image')
+    .ui.header What is Sahaj Atlas?
+    p There are many Sahaj websites out there with out of date public program information. Even when the details are updated they quickly go out of date, or the interface where the programs are listed is difficult to navigate.
+    p Realisation tours, and international Sahaj websites need a reliable place to refer seekers so that they can make it to local programs.
+
+    = image_tag('sahaj-atlas/mobile.svg', class: 'ui medium left floated image')
+    .ui.header A Reuseable World Map
+    p We've created a map where seekers can search for programs worldwide. It is mobile-friendly, easy to search, and has a slick modern design. All types of events can be listed here. Seekers can register for the class and view images of the class if available.
+    p This map can be embedded on any Sahaj website, the style of the map can be adjusted match, and the map can be contained to one country or region. Our hope is that country collectives will start using this map for their national website. Then they will be committed to keeping it up to date, and all international Sahaj projects will benefit.
+    p To make the map easier to adopt, seekers can be directed to register on Meetup, Eventbrite, or Facebook instead of registering on the map directly.
+    p For more advanced technical usage, the data of Sahaj Atlas can be accessed via an API.
+
+    = image_tag('sahaj-atlas/freelancer.svg', class: 'ui medium right floated image')
+    .ui.header Database Management
+    p There is a web interface where new programs can be entered into the database, to be shown on the map. A manager can be set up for each country who can then delegate access to specific regions to other yogis. This way each country and local collective can manage the events for their area.
+    p To make sure the map stays up to date an automatic email will be sent to local program managers every 2 months or so. In this email they will be asked to confirm that the program details are still correct.
+
+    = image_tag('sahaj-atlas/letter.svg', class: 'ui medium right floated image')
+    .ui.header Registration Follow-ups
+    p When seekers register on Sahaj Atlas, they give us their email address. We will then send them a reminder email just before the class. We can then also use these email addresses to promote programs to those seekers.
+    p For example, if a seeker attends a big concert, we can then send them an email suggesting a few follow-up classes in their area.
+    p We can also use their email addresses to advertise to them directly on Facebook and other platforms.
+
+    .ui.section.divider
+
+    p
+      ' If you have further questions, would like to help with development, or would like help embedding the map on your website, please write to
+      = mail_to 'contact@sydevelopers.com'
