@@ -8,6 +8,4 @@ $(document).on('turbolinks:load', function() {
   $('.message .close').on('click', function() {
     $(this).closest('.message').transition('fade')
   })
-
-  window.history.replaceState({}, document.title, window.location.pathname)
 })
