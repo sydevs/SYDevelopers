@@ -1,0 +1,35 @@
+
+- content_for(:title, "About We Meditate App")
+
+.project
+  .project__header
+    .ui.circular.bordered.tiny.image
+      = image_tag('mobile-app/logo.png')
+    h1.ui.sub.header
+      | The We Meditate App
+    /p: a href='//atlas.sydevelopers.com' target='_blank' atlas.sydevelopers.com
+
+  .ui.text.container
+    p A professional quality iOS and Android app for introducing seekers to Sahaja Yoga, and supporting intermediate seekers in public programs.
+
+    = image_tag('mobile-app/mobile-application.svg', class: 'ui medium right floated image')
+    .ui.header Why develop this app?
+    p Increasingly people who are interested meditation first look for a phone app, before turning to more traditional meditation classes. Especially amongst the younger more technically savvy population, the idea of trying meditation is increasingly popular. Free meditation apps are an accessible and low risk way for people to try meditation.
+    p While we don't have the marketing power to compete with apps like Headspace and Calm, it's within our capability to create an app of similar professional quality. There are a few Sahaj apps out there, but they are difficult to navigate and have a poor quality design.
+    p Once this app is developed, it can be recommended directly to friends, in public programs and on realisation tours rather than relying on advertising.
+
+    = image_tag('mobile-app/meditating.svg', class: 'ui medium left floated image')
+    .ui.header Guided Meditations Library
+    p The primary feature of this app will be a library of guided meditations. This is the thing that most people are looking for in a meditation app.
+    p The plan is to start with a very small and quick but professional app, and slowly expand the features based on user testing and feedback. Future iterations of the app may include tracking personal goals, and recommending guided meditations based on what the user tells us that they feel on their hands.
+
+    = image_tag('mobile-app/destination.svg', class: 'ui medium right floated image')
+    .ui.header Directing Seekers to Programs
+    p Although this will not be ready in the first iteration of the app, it will be possible to use the app to direct seekers to attend local public programs. The first step would be to integrate the app with the <a href='/sahaj-atlas'>Sahaj Atlas</a> project, in order to list all public programs world wide.
+    p An even more advanced implementation would allow us to send notifications to users' phones when there is a special event in their area, or when they travel to a new location.
+
+    .ui.section.divider
+
+    p
+      ' If you have further questions or would like to help with development, please write to
+      = mail_to 'contact@sydevelopers.com'

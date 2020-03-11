@@ -8,4 +8,6 @@ Rails.application.routes.draw do
 
   get :wemeditate, to: 'application#wemeditate'
   get :atlas, to: 'application#atlas'
+  get :resources, to: 'application#resources'
+  get :app, to: 'application#app'
 end
