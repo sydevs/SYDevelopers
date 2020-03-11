@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 
   before_action :init_airtable!
 
-  def funds
+  def index
     expires_in 10.minutes
     projects_table = @client.table(ENV['AIRTABLE_BASE'], 'Projects')
     expenses_table = @client.table(ENV['AIRTABLE_BASE'], 'Expenses')
@@ -32,17 +32,6 @@ class ApplicationController < ActionController::Base
     @total_expenses = @projects.sum(&:monthly)
     @raised_funds = @month_donations.sum(&:amount).to_f / 100
     @progress = @raised_funds / @total_expenses * 100
-    render 'funds/show'
-  end
-
-  def launch
-    expires_in 1.week
-    category_order = ['Public Websites', 'Resources', 'Mobile Apps', 'Services']
-    projects_table = @client.table(ENV['AIRTABLE_BASE'], 'Projects')
-    @projects = projects_table.select(formula: "AND(NOT(Type = ''), NOT(URL = ''), NOT(Category = ''))")
-    @projects = @projects.group_by { |p| p[:category] }
-    @projects = (category_order | @projects.keys).map { |k| [k, @projects[k]] }.to_h
-    render 'launch/show'
   end
 
   def prepare_stripe

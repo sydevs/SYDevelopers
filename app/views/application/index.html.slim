@@ -1,0 +1,157 @@
+
+.ui.text.container
+  h1.ui.header Sahaj Web Projects
+  p This page lists a set of connected digital projects created to help promote Sahaja Yoga.
+
+  - if params[:callback] == 'success'
+    .ui.icon.message
+      i.close.icon
+      i.blue.hands.helping.icon
+      .content
+        .header Donation successful
+        .description Thank you for your contribution!
+  - elsif params[:callback] == 'cancel'
+    .ui.icon.message
+      i.close.icon
+      i.red.cancel.icon
+      .content
+        .header Donation cancelled
+        .description Your donation has been cancelled, no money will be charged.
+
+  /
+    h2.ui.medium.red.dividing.header Fundraising
+    .ui.right.floated.small.statistic
+      .label Target
+      .value = number_to_currency @total_expenses, unit: '£'
+      .label Per Month
+
+    p A lot of time is volunteered to make this projects a reality. However, we still need to pay to host the servers, images, videos, domains, and other services that make these projects possible. As more seekers and yogis use the site, the costs will become larger.
+
+    .ui.red.right.floated.donation.button
+      i.heart.icon
+      | Donate
+    
+    p If you are able to contribute some money to the upkeep of these projects, it will be much appreciated. You can learn more about each project in the list below.
+    
+    .ui.active.progress data-value=@progress data-total='100'
+      .bar
+        .progress
+      .label
+        | #{number_to_currency @raised_funds, unit: '£'} raised for November 2020
+
+    .ui.small.sub.header Recent Donations
+    .ui.list
+      - @recent_donations.each do |donation|
+        .item
+          i.flag class=donation['billing_details']['address']['country'].downcase
+          strong = number_to_currency donation['amount'].to_f / 100, unit: currency_unit(donation['currency'])
+          |  at #{Time.at(donation['created']).to_s(:long)}
+
+  h2.ui.medium.red.dividing.header Projects
+  .ui.divided.items
+    - @projects.each do |project|
+      - next unless project[:identifier].present?
+
+      .item
+        .ui.tiny.rounded.image
+          img src=project[:icon][0][:url]
+        .content
+          .header
+            = project[:name]
+          .meta
+            - if project[:url].present?
+              a href=project[:url] = URI.parse(project[:url]).host
+            - else
+              | work in progress
+          .description
+            = project[:description]
+          a.link href="/#{project[:identifier]}"
+            span Learn More
+            i.right.arrow.icon
+          .extra
+            - monthly_expenses = project[:expenses].inject(0) { |sum, expense| sum + expense[:monthly] }
+            - if monthly_expenses.positive?
+              .ui.small.accordion
+                .title
+                  i.dropdown.icon
+                  | Project Expenses: #{number_to_currency monthly_expenses, unit: '£', precision: 0} / month
+                .content
+                  table.ui.very.basic.small.compact.table
+                    - project[:expenses].each do |expense|
+                      - next if expense[:monthly].zero?
+
+                      tr
+                        td
+                          .header = expense[:name]
+                          .description = expense[:description]
+                        td.top.aligned.collapsing
+                          - if expense[:type] == 'Monthly'
+                            | #{number_to_currency expense[:monthly], unit: '£'}
+                            br
+                            | / month
+                          - else
+                            | #{number_to_currency expense[:yearly], unit: '£'}
+                            br
+                            | / year
+            - else
+              | Project Expenses: £0 
+
+  .ui.section.divider
+  h3.ui.sub.header Other Sahaj Web Projects
+  p Above are the projects currently managed in connection with sydevelopers.com. You can find a complete list of high quality digital Sahaj projects on the resources website.
+  a.ui.button href='http://www.sahajaresources.com/digital' target='_blank' rel='noopener'
+    | All web projects
+    i.right.arrow.icon
+
+.ui.mini.donation.modal
+  .ui.attached.error.hidden.message Failure!
+  .header Donation
+  .content
+    .ui.form data-url=prepare_stripe_path
+      p.hint Choose a currency and amount
+
+      .field
+        .ui.fluid.search.selection.icon.dropdown
+          input type='hidden' name='currency' value='eur'
+          .default.text Select Currency
+          i.dropdown.icon
+          .menu
+            .item data-value='eur'
+              i.euro.icon
+              | Euros
+            .item data-value='usd'
+              i.dollar.icon
+              | US Dollars
+            .item data-value='gbp'
+              i.pound.icon
+              | UK Pounds
+            .item data-value='rub'
+              i.ruble.icon
+              | Russian Rubles
+            .item data-value='inr'
+              i.rupee.icon
+              | Indian Rupees
+            .item data-value='cad'
+              i.dollar.icon
+              | Canadian Dollars
+            .item data-value='aud'
+              i.dollar.icon
+              | Australian Dollars
+
+      .field
+        .ui.labeled.fluid.labeled.input
+          .ui.basic.label Amount
+          input type='number' name='amount' value='20' placeholder='0.00' min='1'
+
+      /p.hint Choose whether this is a one-time donation, or a monthly recurring donation.
+  .actions
+    .ui.cancel.button
+      | Cancel
+    .ui.red.approve.button data-mode='payment'
+      | Donate
+    /.ui.buttons
+      .ui.red.approve.button data-mode='payment'
+        | Once
+      .or
+      .ui.red.approve.button data-mode='subscription'
+        | Monthly

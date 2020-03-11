@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: 'application#funds'
-  get :launch, to: 'application#launch'
-  get :funds, to: 'application#funds'
+  root to: 'application#index'
   get :prepare_stripe, to: 'application#prepare_stripe'
 
   get :wemeditate, to: 'application#wemeditate'

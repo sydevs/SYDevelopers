@@ -1,0 +1,101 @@
+$theme-color: #cd5c5c
+  
+body.index
+  .ui.text.container
+    padding-top: 5vh
+    padding-bottom: 15vh
+
+  .ui.red.header,
+  .ui.red.icon
+    color: $theme-color
+
+  .ui.red.button,
+  .ui.progress .bar
+    background-color: $theme-color
+
+  .ui.red.button:hover
+    background-color: darken($theme-color, 2.5%)
+
+  .ui.table
+    .header
+      font-weight: 500
+
+    .description
+      opacity: 0.8
+
+  .ui.right.floated
+    margin-left: 2em
+    margin-bottom: 0.75em
+
+  .ui.items > .item
+    position: relative
+
+    @media screen and (max-width: 767px)
+      .image
+        width: 40px !important
+        height: 40px !important
+        position: absolute
+        left: 0
+        right: 0
+        margin: 0
+
+      .content
+        padding-top: 0 !important
+
+      .header, .meta
+        padding-left: 54px
+
+    .header
+      font-size: 1.15em !important
+
+    .header + .meta
+      margin-top: 0
+
+    .description
+      position: relative
+
+    .link
+      display: inline-block
+      color: transparentize(black, 0.6)
+      margin-top: 0.5em
+      transition: color 0.25s ease
+
+      .icon
+        margin-left: 0.25em
+
+    .link:hover
+      color: transparentize(black, 0.5)
+
+    .link:hover span
+      text-decoration: underline
+    
+    .extra
+      //color: indianred
+
+    .right.floated.button
+      position: absolute
+      bottom: -36px
+      right: 0
+
+  .ui.accordion
+    > .title
+      color: inherit
+      padding: 0
+
+      .dropdown.icon
+        width: 0.5em
+        margin-right: 0.5em
+
+    > .content
+      padding: 0.5em 1em !important
+
+  .ui.form
+    > *:first-child
+      margin-top: 0
+
+    > *:last-child
+      margin-bottom: 0
+
+    .hint
+      font-size: 85%
+      margin-top: 0.5em
