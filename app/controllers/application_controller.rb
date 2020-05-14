@@ -47,8 +47,8 @@ class ApplicationController < ActionController::Base
         currency: params[:currency] || 'usd',
         quantity: 1,
       }],
-      success_url: funds_url(callback: 'success'),
-      cancel_url: funds_url(callback: 'cancel'),
+      success_url: root_url(callback: 'success'),
+      cancel_url: root_url(callback: 'cancel'),
     )
 
     render json: { status: 'success', session_id: session.id }
