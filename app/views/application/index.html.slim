@@ -21,22 +21,28 @@
   h2.ui.medium.red.dividing.header Fundraising
   .ui.right.floated.small.statistic
     .label Target
-    .value = number_to_currency @total_expenses, unit: '£'
-    .label Per Month
+    .value = number_to_currency @total_expenses
+    /.label Per Month
 
-  p A great deal of time is volunteered to make these projects a reality. However, we still need to pay to host the servers, images, videos, domains, and other services that make these projects possible. As more seekers and yogis use the site, the costs will become larger.
+  p The normal running costs of these projects are quite modest, currently a mere #{number_to_currency @projects.sum(&:monthly), precision: 0}/month. But to make We Meditate a more effective tool to reach seekers, there is a desire to purchase the <b>wemeditate.com</b> domain name.
+
+  /p A great deal of time is contributed voluntarily to make these projects a reality. Howevever there are also costs to hosting these services (for images, videos, web addresses, etc). As more seekers and yogis use the site, the costs will grow.
+  /p A great deal of time is volunteered to make these projects a reality. However, we still need to pay to host the servers, images, videos, domains, and other services that make these projects possible. As more seekers and yogis use the site, the costs will become larger.
 
   .ui.red.right.floated.donation.button
     i.heart.icon
     | Donate
   
-  p If you are able to contribute some money to the upkeep of these projects, it will be much appreciated. You can learn more about each project in the list below.
+  p Web addresses ending with <em>.com</em> are the easiest for people to remember and will rank better on Google. Unfortunately, the <em>wemeditate.com</em> domain is already owned, and after some negotiation the owner has agreed to sell it to us for $19,200 USD.
+  //p If you are able to contribute some money to the upkeep of these projects, it will be much appreciated. You can learn more about each project in the list below.
+  p If you are able to contribute some money to this goal, it will be much appreciated. You can also learn more about the project in the list below.
   
   .ui.active.progress data-value=@progress data-total='100'
     .bar
       .progress
     .label
-      | #{number_to_currency @raised_funds, unit: '£'} raised for November 2020
+      //| #{number_to_currency @raised_funds} raised for November 2020
+      | #{number_to_currency @raised_funds} raised
 
   .ui.small.sub.header Recent Donations
   .ui.list
@@ -73,7 +79,7 @@
               .ui.small.accordion
                 .title
                   i.dropdown.icon
-                  | Project Expenses: #{number_to_currency monthly_expenses, unit: '£', precision: 0} / month
+                  | Project Expenses: #{number_to_currency monthly_expenses, precision: 0} / month
                 .content
                   table.ui.very.basic.small.compact.table
                     - project[:expenses].each do |expense|
@@ -85,15 +91,15 @@
                           .description = expense[:description]
                         td.top.aligned.collapsing
                           - if expense[:type] == 'Monthly'
-                            | #{number_to_currency expense[:monthly], unit: '£'}
+                            | #{number_to_currency expense[:monthly]}
                             br
                             | / month
                           - else
-                            | #{number_to_currency expense[:yearly], unit: '£'}
+                            | #{number_to_currency expense[:yearly]}
                             br
                             | / year
             - else
-              | Project Expenses: £0 
+              | Project Expenses: $0 
 
   .ui.section.divider
   h3.ui.sub.header Other Sahaj Web Projects

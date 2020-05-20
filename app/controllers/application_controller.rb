@@ -22,14 +22,19 @@ class ApplicationController < ActionController::Base
     end
 
     @month_donations = Rails.cache.fetch('stripe-month-donations', expires_in: 10.minutes) do
-      Stripe::BalanceTransaction.list({ created: { gte: Time.now.at_beginning_of_month.to_i }, limit: 1000 }).data
+      Stripe::BalanceTransaction.list({
+        # created: { gte: Time.now.at_beginning_of_month.to_i },
+        created: { gte: Time.now.at_beginning_of_year.to_i },
+        type: :charge,
+        limit: 1000
+      }).data
     end
 
     @recent_donations = Rails.cache.fetch('stripe-recent-donations', expires_in: 10.minutes) do
       Stripe::Charge.list({ paid: true, limit: 10 }).data
     end
 
-    @total_expenses = @projects.sum(&:monthly)
+    @total_expenses = @projects.sum(&:monthly) * 12 + 19200
     @raised_funds = @month_donations.sum(&:amount).to_f / 100
     @progress = @raised_funds / @total_expenses * 100
   end
