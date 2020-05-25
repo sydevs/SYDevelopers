@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
       Stripe::Charge.list({ paid: true, limit: 10 }).data
     end
 
-    @total_expenses = @projects.sum(&:monthly) * 12 + 19200
+    @total_expenses = @projects.sum(&:monthly)
     @raised_funds = @month_donations.sum(&:amount).to_f / 100
     @progress = @raised_funds / @total_expenses * 100
   end
