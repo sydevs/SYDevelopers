@@ -1,8 +1,9 @@
+/* global $, stripe */
 
 const Donations = {
 
   load: function() {
-    console.log("Initialize Donation.js")
+    console.log('Initialize Donation.js') // eslint-disable-line no-console
 
     Donations.$modal = $('.ui.donation.modal')
     Donations.$message = $('.ui.donation.modal .ui.message')
@@ -17,7 +18,7 @@ const Donations = {
         Donations.submitForm($element)
         return false
       },
-      onDeny: function($element) {
+      onDeny: function(_$element) {
         if (Donations.$form.hasClass('loading')) {
           Donations.setState('idle')
           return false
@@ -34,14 +35,13 @@ const Donations = {
   },
 
   submitForm: function($button) {
-    Donations.setState('waiting')
+    Donations.setState('loading')
     $button.addClass('pink')
 
     $.get({
       url: Donations.$form.data('url'),
       data: {
         mode: $button.data('mode'),
-        email: Donations.$form.find('input[name="email"]').val(),
         currency: Donations.$form.find('input[name="currency"]').val(),
         amount: Donations.$form.find('input[name="amount"]').val(),
       },
@@ -56,8 +56,8 @@ const Donations = {
   },
 
   processServerResponse(result) {
-    if (Donations.state != 'waiting') {
-      console.log('Ignoring canceled donation from server.')
+    if (Donations.state != 'loading') {
+      console.log('Ignoring canceled donation from server.') // eslint-disable-line no-console
       return
     }
 
@@ -67,7 +67,7 @@ const Donations = {
         sessionId: result.session_id,
       }).then(function (result) {
         Donations.setState('error', result.error.message)
-      });
+      })
     } else {
       Donations.setState('error', result.message)
     }

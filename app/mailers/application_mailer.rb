@@ -1,4 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default template_path: 'mailer'
+  default from: 'contact@sydevelopers.com'
   layout 'mailer'
 end

@@ -24,16 +24,11 @@
     .value = number_to_currency @total_expenses
     .label Per Month
 
-  /p The normal running costs of these projects are quite modest, currently a mere #{number_to_currency @projects.sum(&:monthly), precision: 0}/month. But to make We Meditate a more effective tool to reach seekers, there is a desire to purchase the <b>wemeditate.com</b> domain name.
-
   p A great deal of time is contributed voluntarily to make these projects a reality. Howevever there are also costs to running these services (for images, videos, web addresses, etc). As more seekers and yogis use the site, the costs will also slowly grow.
   
   .ui.red.right.floated.donation.button
     i.heart.icon
     | Donate
-  
-  /p Web addresses ending with <em>.com</em> are the easiest for people to remember and will rank better on Google. Unfortunately, the <em>wemeditate.com</em> domain is already owned, and after some negotiation the owner has agreed to sell it to us for $19,200 USD.
-  /p If you are able to contribute some money to this goal, it will be much appreciated. You can also learn more about the project in the list below.
   
   p If you are able to contribute some money to the upkeep of these projects, it will be much appreciated. You can learn more about each project in the list below.
 
@@ -42,7 +37,9 @@
       .progress
     .label
       | #{number_to_currency @raised_funds} raised for #{Date.today.strftime("%B %Y")}
-      //| #{number_to_currency @raised_funds} raised
+
+  .ui.basic.small.right.floated.billing.button
+    | Manage monthly donation
 
   .ui.small.sub.header Recent Donations
   .ui.list
@@ -108,6 +105,22 @@
     | All web projects
     i.right.arrow.icon
 
+.ui.tiny.billing.modal
+  .ui.attached.error.hidden.message Failure!
+  .header Manage Monthly Donation
+  .content
+    .ui.form data-url=billing_email_path
+      p.hint If you have previously set up a monthly donation, provide your email below and we will send you a link where you can cancel your donation or update your card information.
+      .field
+        .ui.labeled.fluid.labeled.input
+          .ui.basic.label Email Address
+          input type='email' name='email' required=true
+  .actions
+    .ui.cancel.button
+      | Close
+    .ui.red.ok.button
+      | Submit
+
 .ui.mini.donation.modal
   .ui.attached.error.hidden.message Failure!
   .header Donation
@@ -148,13 +161,11 @@
           .ui.basic.label Amount
           input type='number' name='amount' value='20' placeholder='0.00' min='1'
 
-      /p.hint Choose whether this is a one-time donation, or a monthly recurring donation.
+      p.hint Choose whether this is a one-time donation, or a monthly recurring donation.
   .actions
     .ui.cancel.button
       | Cancel
-    .ui.red.approve.button data-mode='payment'
-      | Donate
-    /.ui.buttons
+    .ui.buttons
       .ui.red.approve.button data-mode='payment'
         | Once
       .or

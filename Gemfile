@@ -30,6 +30,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'letter_opener' # Let's us capture test emails to verify that they were sent, and what markup was actually sent.
 end
 
 group :test do
