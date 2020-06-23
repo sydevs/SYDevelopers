@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
     @month_donations = Rails.cache.fetch('stripe-month-donations', expires_in: 10.minutes) do
       Stripe::BalanceTransaction.list({
-        created: { gte: Time.now.at_beginning_of_month.to_i },
+        created: { gte: 30.days.ago.to_i },
         type: :charge,
         limit: 1000
       }).data
