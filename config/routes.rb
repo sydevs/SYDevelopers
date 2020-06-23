@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   get :atlas, to: 'application#atlas'
   get :resources, to: 'application#resources'
   get :app, to: 'application#app'
+  get :wemeditatecom, to: 'application#domain'
 end

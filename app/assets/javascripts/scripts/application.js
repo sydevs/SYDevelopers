@@ -5,6 +5,7 @@ $(document).on('turbolinks:load', function() {
   $('.ui.accordion').accordion()
   $('.ui.dropdown').dropdown()
   $('.ui.progress').progress()
+  $('.ui.tabular.menu > .item').tab()
 
   $('.message .close').on('click', function() {
     $(this).closest('.message').transition('fade')
