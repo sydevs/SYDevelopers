@@ -32,6 +32,8 @@
   
   p If you are able to contribute some money to the upkeep of these projects, it will be much appreciated. You can learn more about each project in the list below.
 
+  p: em As always, Sahaja Yoga is completely free of charge. We are collecting donations for this project only to cover the costs of running it. All yogis involved in the project volunteer their time without renumeration.
+
   .ui.active.progress data-value=@progress data-total='100'
     .bar
       .progress
@@ -121,7 +123,7 @@
     .ui.red.ok.button
       | Submit
 
-.ui.mini.donation.modal
+.ui.tiny.donation.modal
   .ui.attached.error.hidden.message Failure!
   .header Donation
   .content
@@ -161,7 +163,11 @@
           .ui.basic.label Amount
           input type='number' name='amount' value='20' placeholder='0.00' min='1'
 
-      p.hint Choose whether this is a one-time donation, or a monthly recurring donation.
+      p.hint
+        ' We Meditate is an international project, run by yogis from various countries for the advancement of Sahaja Yoga online.
+        ' For legal and accounting purposes, we must collect funds through a registered charity.
+        ' For that <b>we have partnered with <i>Life Eternal Trust UK</i></b>, which was started by Shri Mataji in 1985.
+        ' Donations are kept in a separate account belonging to LET, dedicated to funding the projects listed on this website.
   .actions
     .ui.cancel.button
       | Cancel
