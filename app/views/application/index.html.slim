@@ -40,16 +40,30 @@
     .label
       | #{number_to_currency @raised_funds} donated in the last 30 days.
 
-  .ui.basic.small.right.floated.billing.button
-    | Manage monthly donation
 
-  .ui.small.sub.header Recent Donations
-  .ui.list
-    - @recent_donations.each do |donation|
-      .item
-        i.flag class=donation['billing_details']['address']['country'].downcase
-        strong = number_to_currency donation['amount'].to_f / 100, unit: currency_unit(donation['currency'])
-        |  at #{Time.at(donation['created']).to_s(:long)}
+  .ui.equal.width.stackable.grid
+    .column
+      .ui.small.sub.header Recent Donations
+      .ui.list
+        - @recent_donations.each do |donation|
+          .item
+            i.flag class=donation['billing_details']['address']['country'].downcase
+            strong = number_to_currency donation['amount'].to_f / 100, unit: currency_unit(donation['currency'])
+            |  at #{Time.at(donation['created']).to_s(:long)}
+    .column
+      div style='text-align: right; position: relative; top: -8px'
+        span.ui.basic.small.right.aligned.billing.button
+          | Manage monthly donation
+
+      .ui.raised.secondary.segment
+        .ui.small.header Contribute Your Time
+        p These projects are available for contributions on GitHub - or if you are not a programmer, we always use help developing content (with writing, editing, photography, social media etc).
+        a.ui.basic.button href="mailto:contact@sydevelopers.com"
+          i.mail.icon
+          | Email Us
+        a.ui.grey.button href="https://github.com/sydevs" target="_blank"
+          i.github.icon
+          | GitHub
 
   h2.ui.medium.red.dividing.header Projects
   .ui.divided.items
