@@ -34,9 +34,9 @@
 
   p: em As always, Sahaja Yoga is completely free of charge. We are collecting donations for this project only to cover the costs of running it. All yogis involved in the project volunteer their time without renumeration.
 
-  .ui.active.progress data-value=@progress data-total='100'
-    .bar
-      .progress
+  .ui.multiple.progress data-percent=@progress
+    span.bar: .progress
+    span.bar: .progress
     .label
       | #{number_to_currency @raised_funds} donated in the last 30 days.
 
@@ -57,7 +57,7 @@
 
       .ui.raised.secondary.segment
         .ui.small.header Contribute Your Time
-        p These projects are available for developers to contributors GitHub - or if you are not a programmer, we can use help developing content (with writing, editing, photography, social media etc).
+        p These projects are available for developers to contribute to on GitHub - or if you are not a programmer, we need help developing content (with writing, editing, photography, social media etc).
         a.ui.basic.button href="mailto:contact@sydevelopers.com"
           i.mail.icon
           | Email Us
@@ -126,12 +126,15 @@
   .header Manage Monthly Donation
   .content
     .ui.form data-url=billing_email_path
-      p.hint If you have previously set up a monthly donation, provide your email below and we will send you a link where you can cancel your donation or update your card information.
+      p.hint If you have previously set up a monthly donation, provide your email below and we will send you a link where you can cancel your donation or update your card information. Contact us if you need help.
       .field
         .ui.labeled.fluid.labeled.input
           .ui.basic.label Email Address
           input type='email' name='email' required=true
   .actions
+    .ui.basic.button href='mailto:contact@sydevelopers.com'
+      i.mail.icon
+      | Contact Us
     .ui.cancel.button
       | Close
     .ui.red.ok.button

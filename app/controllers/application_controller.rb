@@ -33,9 +33,22 @@ class ApplicationController < ActionController::Base
       Stripe::Charge.list({ paid: true, limit: 10 }).data
     end
 
+    subscription_funds = 0
+    @raised_funds = 0
+    @month_donations.each do |t|
+      amount = t.net.to_f / 100
+      subscription_funds += amount if t.description&.downcase&.include?('subscription')
+      @raised_funds += amount
+    end
+
     @total_expenses = @projects.sum(&:monthly)
-    @raised_funds = @month_donations.sum(&:amount).to_f / 100
-    @progress = @raised_funds / @total_expenses * 100
+    subscription_percent = subscription_funds / @total_expenses * 100
+    raised_percent = (@raised_funds / @total_expenses * 100) - subscription_percent
+    subscription_percent = subscription_percent.clamp(0, 100)
+    raised_percent = raised_percent.clamp(0, 100 - subscription_percent)
+
+    # @raised_funds = @month_donations.sum(&:amount).to_f / 100
+    @progress = "#{subscription_percent},#{raised_percent}"
   end
 
   def prepare_stripe

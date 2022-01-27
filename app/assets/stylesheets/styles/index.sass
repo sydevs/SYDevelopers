@@ -10,11 +10,20 @@ body.index
     color: $theme-color
 
   .ui.red.button,
-  .ui.progress .bar
+  .ui.progress .bar:first-child
     background-color: $theme-color
+
+  .ui.progress .bar:last-of-type
+    background-color: desaturate($theme-color, 30%)
 
   .ui.red.button:hover
     background-color: darken($theme-color, 2.5%)
+
+  .ui.progress .bar:first-child .progress::before
+    content: 'Every Month '
+
+  .ui.progress .bar:last-of-type .progress::before
+    content: 'This Month '
 
   .ui.table
     .header
