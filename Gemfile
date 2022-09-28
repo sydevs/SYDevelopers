@@ -16,6 +16,7 @@ gem 'bootsnap', '>= 1.1.0', require: false # Reduces boot times through caching;
 gem 'fomantic-ui-sass' # Use Fomantic/Semantic as css framework
 gem 'stripe-rails' # Use Stripe for payment processing and data
 gem 'airtable' # Use Airtable as the database
+gem 'redcarpet' # Use Redcarpet to render markdown from Airtable
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

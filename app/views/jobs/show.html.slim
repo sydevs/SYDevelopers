@@ -1,0 +1,23 @@
+
+- content_for(:title, "#{@job[:name]} | SY Developers")
+
+.page
+  .page__header
+    i.big.icon class=[category_color(@job[:category]), @job[:icon]]
+    h1.ui.sub.header = @job[:name]
+    p
+      a href=jobs_url
+        i.arrow.left.icon
+        | Back to Jobs
+      small &nbsp - &nbsp
+      a href="mailto:contact@sydevelopers.com?subject=Job: #{@job[:name]}" target='_blank'
+        /i.mail.icon
+        ' Contact Us 
+        i.mail.icon
+
+  .ui.text.container
+    = markdown @job[:description]
+    .ui.divider 
+    a.ui.basic.button href="mailto:contact@sydevelopers.com?subject=Job: #{@job[:name]}" target='_blank'
+      i.mail.icon
+      | Contact Us

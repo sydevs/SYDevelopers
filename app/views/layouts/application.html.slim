@@ -10,5 +10,5 @@ html
     = stripe_javascript_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-  body class=action_name 
+  body class=[controller_name, action_name]
     = yield

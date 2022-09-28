@@ -1,0 +1,197 @@
+- content_for(:title, "Fundraising | SY Developers")
+
+.ui.text.container
+  h1.ui.header Sahaj Web Projects
+  p This page lists a set of connected digital projects created to help promote Sahaja Yoga.
+
+  - if params[:callback] == 'success'
+    .ui.icon.message
+      i.close.icon
+      i.blue.hands.helping.icon
+      .content
+        .header Donation successful
+        .description Thank you for your contribution!
+  - elsif params[:callback] == 'cancel'
+    .ui.icon.message
+      i.close.icon
+      i.red.cancel.icon
+      .content
+        .header Donation cancelled
+        .description Your donation has been cancelled, no money will be charged.
+
+  h2.ui.medium.red.dividing.header Fundraising
+  .ui.right.floated.small.statistic
+    .label Target
+    .value = number_to_currency @total_expenses
+    .label Per Month
+
+  p A great deal of time is contributed voluntarily to make these projects a reality. Howevever there are also costs to running these services (for images, videos, web addresses, etc). As more seekers and yogis use the site, the costs will also slowly grow.
+  
+  .ui.red.right.floated.donation.button
+    i.heart.icon
+    | Donate
+  
+  p If you are able to contribute some money to the upkeep of these projects, it will be much appreciated. You can learn more about each project in the list below.
+
+  p: em As always, Sahaja Yoga is completely free of charge. We are collecting donations for this project only to cover the costs of running it. All yogis involved in the project volunteer their time without renumeration.
+
+  .ui.multiple.progress data-percent=@progress
+    span.bar: .progress
+    span.bar: .progress
+    .label
+      | #{number_to_currency @raised_funds} donated in the last 30 days.
+
+
+  .ui.equal.width.stackable.grid
+    .column
+      .ui.small.sub.header Recent Donations
+      .ui.list
+        - @recent_donations.each do |donation|
+          .item
+            i.flag class=donation['billing_details']['address']['country'].downcase
+            strong = number_to_currency donation['amount'].to_f / 100, unit: currency_unit(donation['currency'])
+            |  at #{Time.at(donation['created']).to_s(:long)}
+    .column
+      div style='text-align: right; position: relative; top: -8px'
+        span.ui.basic.small.right.aligned.billing.button
+          | Manage monthly donation
+
+      .ui.raised.secondary.segment
+        .ui.small.header Contribute Your Time
+        p These projects are available for developers to contribute to on GitHub - or if you are not a programmer, we need help developing content (with writing, editing, photography, social media etc).
+        a.ui.basic.button href="mailto:contact@sydevelopers.com"
+          i.mail.icon
+          | Email Us
+        a.ui.grey.button href="https://github.com/sydevs" target="_blank"
+          i.github.icon
+          | GitHub
+
+  h2.ui.medium.red.dividing.header Projects
+  .ui.divided.items
+    - @projects.each do |project|
+      - next unless project[:identifier].present?
+
+      .item
+        .ui.tiny.rounded.image
+          img src=project[:icon][0][:url]
+        .content
+          .header
+            = project[:name]
+          .meta
+            - if project[:url].present?
+              a href=project[:url] = URI.parse(project[:url]).host
+            - else
+              | work in progress
+          .description
+            = project[:description]
+          a.link href="/#{project[:identifier]}"
+            span Learn More
+            i.right.arrow.icon
+          .extra
+            - monthly_expenses = project[:expenses].inject(0) { |sum, expense| sum + expense[:monthly] }
+            - if monthly_expenses.positive?
+              .ui.small.accordion
+                .title
+                  i.dropdown.icon
+                  | Project Expenses: #{number_to_currency monthly_expenses, precision: 0} / month
+                .content
+                  table.ui.very.basic.small.compact.table
+                    - project[:expenses].each do |expense|
+                      - next if expense[:monthly].zero?
+
+                      tr
+                        td
+                          .header = expense[:name]
+                          .description = expense[:description]
+                        td.top.aligned.collapsing
+                          - if expense[:type] == 'Monthly'
+                            | #{number_to_currency expense[:monthly]}
+                            br
+                            | / month
+                          - else
+                            | #{number_to_currency expense[:yearly]}
+                            br
+                            | / year
+            - else
+              | Project Expenses: $0 
+
+  .ui.section.divider
+  h3.ui.sub.header Other Sahaj Web Projects
+  p Above are the projects currently managed in connection with sydevelopers.com. You can find a complete list of high quality digital Sahaj projects on the resources website.
+  a.ui.button href='http://www.sahajaresources.com/digital' target='_blank' rel='noopener'
+    | All web projects
+    i.right.arrow.icon
+
+.ui.tiny.billing.modal
+  .ui.attached.error.hidden.message Failure!
+  .header Manage Monthly Donation
+  .content
+    .ui.form data-url=billing_email_path
+      p.hint If you have previously set up a monthly donation, provide your email below and we will send you a link where you can cancel your donation or update your card information. Contact us if you need help.
+      .field
+        .ui.labeled.fluid.labeled.input
+          .ui.basic.label Email Address
+          input type='email' name='email' required=true
+  .actions
+    .ui.basic.button href='mailto:contact@sydevelopers.com'
+      i.mail.icon
+      | Contact Us
+    .ui.cancel.button
+      | Close
+    .ui.red.ok.button
+      | Submit
+
+.ui.tiny.donation.modal
+  .ui.attached.error.hidden.message Failure!
+  .header Donation
+  .content
+    .ui.form data-url=prepare_stripe_path
+      p.hint Choose a currency and amount
+
+      .field
+        .ui.fluid.search.selection.icon.dropdown
+          input type='hidden' name='currency' value='eur'
+          .default.text Select Currency
+          i.dropdown.icon
+          .menu
+            .item data-value='eur'
+              i.euro.icon
+              | Euros
+            .item data-value='usd'
+              i.dollar.icon
+              | US Dollars
+            .item data-value='gbp'
+              i.pound.icon
+              | UK Pounds
+            .item data-value='rub'
+              i.ruble.icon
+              | Russian Rubles
+            .item data-value='inr'
+              i.rupee.icon
+              | Indian Rupees
+            .item data-value='cad'
+              i.dollar.icon
+              | Canadian Dollars
+            .item data-value='aud'
+              i.dollar.icon
+              | Australian Dollars
+
+      .field
+        .ui.labeled.fluid.labeled.input
+          .ui.basic.label Amount
+          input type='number' name='amount' value='20' placeholder='0.00' min='1'
+
+      p.hint
+        ' We Meditate is an international project, run by yogis from various countries for the advancement of Sahaja Yoga online.
+        ' For legal and accounting purposes, we must collect funds through a registered charity.
+        ' For that <b>we have partnered with <i>Life Eternal Trust UK</i></b>, which was started by Shri Mataji in 1985.
+        ' Donations are kept in a separate account belonging to LET, dedicated to funding the projects listed on this website.
+  .actions
+    .ui.cancel.button
+      | Cancel
+    .ui.buttons
+      .ui.red.approve.button data-mode='subscription'
+        | Monthly
+      .or
+      .ui.red.approve.button data-mode='payment'
+        | Once
