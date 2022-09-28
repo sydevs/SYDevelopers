@@ -22,7 +22,7 @@
   h2.ui.medium.red.dividing.header Fundraising
   .ui.right.floated.small.statistic
     .label Target
-    .value = number_to_currency @total_expenses
+    .value = number_to_currency @funds[:total_expenses]
     .label Per Month
 
   p A great deal of time is contributed voluntarily to make these projects a reality. Howevever there are also costs to running these services (for images, videos, web addresses, etc). As more seekers and yogis use the site, the costs will also slowly grow.
@@ -35,11 +35,11 @@
 
   p: em As always, Sahaja Yoga is completely free of charge. We are collecting donations for this project only to cover the costs of running it. All yogis involved in the project volunteer their time without renumeration.
 
-  .ui.multiple.progress data-percent=@progress
+  .ui.multiple.progress data-percent="#{@funds[:monthly_percent]},#{@funds[:onetime_percent]}"
     span.bar: .progress
     span.bar: .progress
     .label
-      | #{number_to_currency @raised_funds} donated in the last 30 days.
+      | #{number_to_currency @funds[:total_funds]} donated in the last 30 days.
 
 
   .ui.equal.width.stackable.grid

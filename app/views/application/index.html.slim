@@ -5,11 +5,25 @@ h1.ui.center.aligned.header
   | SAHAJ WEB PROJECTS
   
 .ui.text.container
-  .ui.centered.cards
-    a.card href=funds_url
-      .content
-        .header Contribute Your Time 
-    a.card href=jobs_url
-      .content
-        .header Contribute Your Money
-        
+  .ui.horizontal.stackable.segments
+    .ui.padded.center.aligned.segment
+      .ui.icon.header 
+        i.donate.icon
+        | Donations
+      .ui.blue.progress data-percent=@funds[:total_percent]
+        .bar style='background-color: #cd5c5c'
+          .progress
+        .label #{number_to_currency @funds[:total_funds]} Raised
+      a.ui.basic.red.button href=funds_url
+        | Donate
+        i.right.arrow.icon
+    .ui.padded.center.aligned.segment
+      .ui.icon.header 
+        i.mug.hot.icon
+        | Volunteering
+      .ui.slow.indeterminate.blue.progress
+        .bar
+        .label = pluralize @jobs.count, "Job"
+      a.ui.basic.blue.button href=jobs_url
+        | Volunteer
+        i.right.arrow.icon

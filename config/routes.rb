@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   root to: 'funds#index'
+  get :index, to: 'application#index'
   get :policy, to: 'application#policy'
 
   get :funds, to: 'funds#index'

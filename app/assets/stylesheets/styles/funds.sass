@@ -1,0 +1,22 @@
+$theme-color: #cd5c5c
+
+body.funds
+  .ui.red.header,
+  .ui.red.icon
+    color: $theme-color
+
+  .ui.red.button,
+  .ui.progress .bar:first-child
+    background-color: $theme-color
+
+  .ui.progress .bar:last-of-type
+    background-color: desaturate($theme-color, 30%)
+
+  .ui.red.button:hover
+    background-color: darken($theme-color, 2.5%)
+
+  .ui.progress .bar:first-child .progress::before
+    content: 'Monthly '
+
+  .ui.progress .bar:last-of-type .progress::before
+    content: 'One-time '

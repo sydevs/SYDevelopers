@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   def index
     @jobs = airtable_jobs
-    @progress = compute_funds_progress
+    @funds = compute_funding
   end
 
   def policy
@@ -30,10 +30,20 @@ class ApplicationController < ActionController::Base
     end
 
     def airtable_projects
-      @airtable_projects ||= Rails.cache.fetch('airtable-jobs', expires_in: 10.minutes) do
-        table = @client.table(ENV['AIRTABLE_BASE'], 'Jobs')
-        jobs = table.select(formula: "Public = 1", sort: ['Category', :asc])
-        jobs.index_by(&:id)
+      @airtable_projects ||= Rails.cache.fetch('airtable-projects', expires_in: 10.minutes) do
+        projects_table = @client.table(ENV['AIRTABLE_BASE'], 'Projects')
+        expenses_table = @client.table(ENV['AIRTABLE_BASE'], 'Expenses')
+        projects = projects_table.select(formula: "Type = 'Internal'", sort: ['Monthly', :desc])
+        
+        projects.each do |project|
+          if project[:expenses].present?
+            project[:expenses] = expenses_table.select(formula: "FIND(RECORD_ID(), \"#{project[:expenses].join(',')}\") != 0", sort: ['Monthly', :desc]) 
+          else
+            project[:expenses] = []
+          end
+        end
+  
+        projects
       end
     end
 
@@ -54,26 +64,29 @@ class ApplicationController < ActionController::Base
     end
 
     def compute_funding
-      subscription_funds = 0
-      raised_funds = 0
+      monthly_funds = 0
+      onetime_funds = 0
       stripe_monthly_donations.each do |t|
         amount = t.net.to_f / 100
-        subscription_funds += amount if t.description&.downcase&.include?('subscription')
-        raised_funds += amount
-      end  
+        if t.description&.downcase&.include?('subscription')
+          monthly_funds += amount
+        else
+          onetime_funds += amount
+        end
+      end
+
+      onetime_funds = 50
 
       total_expenses = airtable_projects.sum(&:monthly)
-      subscription_percent = subscription_funds / total_expenses * 100
-      raised_percent = (raised_funds / total_expenses * 100) - subscription_percent
+      monthly_percent = (monthly_funds / total_expenses * 100).clamp(0, 100)
+      onetime_percent = (onetime_funds / total_expenses * 100).clamp(0, 100 - monthly_percent)
 
-      subscription_percent = subscription_percent.clamp(0, 100)
-      raised_percent = raised_percent.clamp(0, 100 - subscription_percent)
-
-      # @raised_funds = @month_donations.sum(&:amount).to_f / 100
       @funding = {
         total_expenses: total_expenses,
-        total_donations: raised_funds,
-        percent_donations: "#{subscription_percent},#{raised_percent}",
+        total_funds: onetime_funds + monthly_funds,
+        monthly_percent: monthly_percent,
+        onetime_percent: onetime_percent,
+        total_percent: onetime_percent + monthly_percent,
       }
     end
 
