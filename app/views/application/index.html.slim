@@ -3,27 +3,51 @@ h1.ui.center.aligned.header
   img.ui.image src=image_url('logo.png')
   .sub.header CONTRIBUTE TO
   | SAHAJ WEB PROJECTS
-  
+
 .ui.text.container
-  .ui.horizontal.stackable.segments
-    .ui.padded.center.aligned.segment
-      .ui.icon.header 
-        i.donate.icon
-        | Donations
-      .ui.blue.progress data-percent=@funds[:total_percent]
-        .bar style='background-color: #cd5c5c'
-          .progress
-        .label #{number_to_currency @funds[:total_funds]} Raised
-      a.ui.basic.red.button href=funds_url
-        | Donate
-        i.right.arrow.icon
-    .ui.padded.center.aligned.segment
-      .ui.icon.header 
-        i.mug.hot.icon
-        | Volunteering
-      .ui.slow.indeterminate.blue.progress
-        .bar
-        .label = pluralize @jobs.count, "Job"
-      a.ui.basic.blue.button href=jobs_url
-        | Volunteer
-        i.right.arrow.icon
+  .ui.relaxed.link.items
+    a.item href=funds_url
+      .content
+        .header
+          i.donate.icon
+          | Donations
+        .meta
+          | #{@funds[:total_percent].to_i}% funded this month
+        /.description
+          .ui.progress data-percent=@funds[:total_percent]
+            .bar style='background-color: #cd5c5c'
+              .progress
+            .label #{number_to_currency @funds[:total_funds]} Raised
+    a.item href=jobs_url
+      .content
+        .header
+          i.mug.hot.icon
+          | Volunteering
+        .meta
+          | #{pluralize @jobs.count, "Job"} jobs need help
+        /.description
+          .ui.slow.indeterminate.blue.progress
+            .bar
+            .label = pluralize @jobs.count, "Job"
+
+  h2.ui.medium.red.dividing.header Our Projects
+  .ui.divided.items
+    - @projects.each do |project|
+      - next unless project[:identifier].present?
+
+      .item
+        .ui.tiny.rounded.image
+          img src=project[:icon][0][:url]
+        .content
+          .header
+            = project[:name]
+          .meta
+            - if project[:url].present?
+              a href=project[:url] = URI.parse(project[:url]).host
+            - else
+              | work in progress
+          .description
+            = project[:description]
+          a.link href="/#{project[:identifier]}"
+            span Learn More
+            i.right.arrow.icon

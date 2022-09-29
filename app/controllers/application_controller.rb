@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   def index
     @jobs = airtable_jobs
     @funds = compute_funding
+    @projects = airtable_projects
   end
 
   def policy
