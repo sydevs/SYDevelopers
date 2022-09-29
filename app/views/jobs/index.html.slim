@@ -19,8 +19,8 @@
   - @job_by_category.each do |category, jobs|
     .ui.small.faded.header id=category.parameterize
       = category.upcase
-      - if category.downcase == 'trades'
-        .sub.header For these roles we expect that you have some prior skills.
+      - if category.downcase == 'development'
+        .sub.header For some of these roles we expect that you have some prior skills.
 
     .ui.small.cards
       - jobs.sort_by { |j| j.priority || 'z' }.each do |job|

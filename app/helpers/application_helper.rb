@@ -5,6 +5,7 @@ module ApplicationHelper
   CATEGORY_COLOR = {
     'content' => 'blue',
     'marketing' => 'red',
+    'development' => 'brown',
     'trades' => 'brown',
   }
 

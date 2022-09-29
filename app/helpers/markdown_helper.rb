@@ -26,6 +26,11 @@ class FomanticMarkdownRenderer < Redcarpet::Render::HTML
     opportunity: 'award',
     need: 'mug hot',
     list: 'tasks',
+    article: 'newspaper',
+    guidance: 'camera',
+    email: 'mail',
+    collaborations: 'handshake',
+    potential: 'tasks'
   }
 
   def list(contents, list_type)
