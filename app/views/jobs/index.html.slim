@@ -5,8 +5,9 @@
   h1.ui.header Sahaj Web Volunteering
   p: em Help us build a strong digital campaign to spread Sahaja Yoga.
   p Many yogis volunteer for these projects, but there's much more than we can manage alone!
-  p If you're ready to take responsibility to make part of this project successful, please get in touch. Enthusiasm is as important as skill.
-  p If you need resume-worthy work, look no further. You're being given meaningful responsibility and a great opportunity to develop skills.
+  ul.ui.list
+    li.item If you're ready to take responsibility to make part of this project successful, please get in touch. Enthusiasm is as important as skill.
+    li.item If you need resume-worthy work, look no further. You're being given meaningful responsibility and a great opportunity to develop skills.
 
   h2.ui.medium.red.dividing.header
     .ui.small.horizontal.labels.actions
@@ -20,7 +21,7 @@
     .ui.small.faded.header id=category.parameterize
       = category.upcase
       - if category.downcase == 'development'
-        .sub.header For some of these roles we expect that you have some prior skills.
+        .sub.header For most of these roles we expect that you have some prior skills.
 
     .ui.small.cards
       - jobs.sort_by { |j| j.priority || 'z' }.each do |job|

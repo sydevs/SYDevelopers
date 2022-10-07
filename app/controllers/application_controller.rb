@@ -76,8 +76,6 @@ class ApplicationController < ActionController::Base
         end
       end
 
-      onetime_funds = 50
-
       total_expenses = airtable_projects.sum(&:monthly)
       monthly_percent = (monthly_funds / total_expenses * 100).clamp(0, 100)
       onetime_percent = (onetime_funds / total_expenses * 100).clamp(0, 100 - monthly_percent)
