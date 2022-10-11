@@ -8,8 +8,11 @@
   ul.ui.list
     li.item If you're ready to take responsibility to make part of this project successful, please get in touch. Enthusiasm is as important as skill.
     li.item If you need resume-worthy work, look no further. You're being given meaningful responsibility and a great opportunity to develop skills.
+  p: a.ui.tiny.basic.compact.button href=root_url
+    i.left.arrow.icon
+    | Back
 
-  h2.ui.medium.red.dividing.header
+  h2.ui.medium.teal.dividing.header
     .ui.small.horizontal.labels.actions
       - @job_by_category.each do |category, jobs|
         a.ui.label class=category_color(category) href="##{category.parameterize}"
@@ -25,7 +28,7 @@
 
     .ui.small.cards
       - jobs.sort_by { |j| j.priority || 'z' }.each do |job|
-        a.ui.fluid.horizontal.card href=job_url(id: job[:id])
+        a.ui.fluid.horizontal.action.card href=job_url(id: job[:id])
           i.red.chevron.right.icon
           i.big.icon class=[category_color(category), job[:icon]]
           - if job[:priority].present?
@@ -34,3 +37,13 @@
           .content
             .header = job[:name]
             .meta = job[:brief].downcase
+
+  .ui.hidden.section.divider
+
+  /.ui.raised.secondary.segment
+    .ui.small.header Contribute by Donation
+    p If you can't volunteer your time, we also welcome donations to keep these projects running.
+    a.ui.basic.button href=funds_url
+      i.donate.icon
+      ' View Donations 
+      i.right.arrow.icon

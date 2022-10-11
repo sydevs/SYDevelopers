@@ -3,6 +3,9 @@
 .ui.text.container
   h1.ui.header Sahaj Web Projects
   p This page lists a set of connected digital projects created to help promote Sahaja Yoga.
+  p: a.ui.tiny.basic.compact.button href=root_url
+    i.left.arrow.icon
+    | Back
 
   - if params[:callback] == 'success'
     .ui.icon.message
@@ -58,15 +61,16 @@
 
       .ui.raised.secondary.segment
         .ui.small.header Contribute Your Time
-        p These projects are available for developers to contribute to on GitHub - or if you are not a programmer, we need help developing content (with writing, editing, photography, social media etc).
-        a.ui.basic.button href="mailto:contact@sydevelopers.com"
-          i.mail.icon
-          | Email Us
-        a.ui.grey.button href="https://github.com/sydevs" target="_blank"
+        p We also need help makinng these projects a success. Help us with photography, writing, editing, social media, graphic design, coding, and more.
+        a.ui.basic.button href=jobs_url
+          i.mug.hot.icon
+          ' View Jobs 
+          i.right.arrow.icon
+        /a.ui.grey.button href="https://github.com/sydevs" target="_blank"
           i.github.icon
           | GitHub
 
-  h2.ui.medium.red.dividing.header Projects
+  h2.ui.medium.red.dividing.header Expenses by Project
   .ui.divided.items
     - @projects.each do |project|
       - next unless project[:identifier].present?
@@ -83,11 +87,10 @@
             - else
               | work in progress
           .description
-            = project[:description]
-          a.link href="/#{project[:identifier]}"
-            span Learn More
-            i.right.arrow.icon
-          .extra
+            /= project[:description]
+            p: a.ui.small.basic.button href="/#{project[:identifier]}"
+              span Learn More
+              i.right.arrow.icon
             - monthly_expenses = project[:expenses].inject(0) { |sum, expense| sum + expense[:monthly] }
             - if monthly_expenses.positive?
               .ui.small.accordion
