@@ -81,16 +81,13 @@
         .content
           .header
             = project[:name]
-          .meta
+          /.meta
             - if project[:url].present?
               a href=project[:url] = URI.parse(project[:url]).host
             - else
               | work in progress
-          .description
+          .meta
             /= project[:description]
-            p: a.ui.small.basic.button href="/#{project[:identifier]}"
-              span Learn More
-              i.right.arrow.icon
             - monthly_expenses = project[:expenses].inject(0) { |sum, expense| sum + expense[:monthly] }
             - if monthly_expenses.positive?
               .ui.small.accordion
@@ -117,6 +114,11 @@
                             | / year
             - else
               | Project Expenses: $0 
+
+            .extra.content
+              a.ui.small.basic.button href="/#{project[:identifier]}"
+                span Learn More
+                i.right.arrow.icon
 
   .ui.section.divider
   h3.ui.sub.header Other Sahaj Web Projects
