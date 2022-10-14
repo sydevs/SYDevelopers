@@ -30,6 +30,23 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def airtable_teams
+      @airtable_teams ||= Rails.cache.fetch('airtable-teams', expires_in: 10.minutes) do
+        table = @client.table(ENV['AIRTABLE_BASE'], 'People')
+        people = table.select(formula: "Public = 1", sort: ['Teams', :asc])
+        teams = people.pluck(:teams).map(&:first).map { |team| [team, []] }.to_h
+        people.each_with_index do |p, i|
+          p[:initials] = p[:name].split(' ').map { |n| n[0] }.join
+          p[:name] = p[:name].split(' ').each_with_index.map { |n, i| i > 0 ? n[0] : n }.join(' ')
+          p[:teams].each { |t| teams[t] << p }
+          p[:color] = %w[red orange yellow olive green teal blue violet purple pink][i % 10]
+        end
+        teams.transform_values! { |p| p.sort_by(&:name) }
+
+        teams
+      end
+    end
+
     def airtable_projects
       @airtable_projects ||= Rails.cache.fetch('airtable-projects', expires_in: 10.minutes) do
         projects_table = @client.table(ENV['AIRTABLE_BASE'], 'Projects')

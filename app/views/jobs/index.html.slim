@@ -12,6 +12,24 @@
     i.left.arrow.icon
     | Back
 
+  h3.ui.medium.teal.dividing.header
+    | Our Current Team
+
+  table.ui.very.basic.table
+    tbody
+      - @teams.each do |team, people|
+        tr
+          td.collapsing: i.big.icon class=team_icon(team)
+          td.collapsing = team
+          td
+            - people.each do |person|
+              .ui.basic.horizontal.label data-tooltip="#{person[:name]} - #{person[:country]}"
+                /class=person[:color]
+                = person[:name].split(' ').first
+                '  - 
+                = person[:short_country]
+                /= person[:initials]
+
   h2.ui.medium.teal.dividing.header
     .ui.small.horizontal.labels.actions
       - @job_by_category.each do |category, jobs|
@@ -27,7 +45,7 @@
         .sub.header For most of these roles we expect that you have some prior skills.
 
     .ui.small.cards
-      - jobs.sort_by { |j| j.priority || 'z' }.each do |job|
+      - jobs.sort_by { |j| j[:priority] || 'z' }.each do |job|
         a.ui.fluid.horizontal.action.card href=job_url(id: job[:id])
           i.red.chevron.right.icon
           i.big.icon class=[category_color(category), job[:icon]]
