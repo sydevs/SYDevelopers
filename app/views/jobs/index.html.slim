@@ -19,8 +19,10 @@
     tbody
       - @teams.each do |team, people|
         tr
-          td.collapsing: i.big.icon class=team_icon(team)
-          td.collapsing = team
+          td.collapsing
+            i.big.icon class=team_icon(team)
+            | &ensp;
+            = team
           td
             - people.each do |person|
               .ui.basic.horizontal.label data-tooltip="#{person[:name]} - #{person[:country]}"
@@ -30,14 +32,13 @@
                 = person[:short_country]
                 /= person[:initials]
 
-  h2.ui.medium.teal.dividing.header
-    .ui.small.horizontal.labels.actions
-      - @job_by_category.each do |category, jobs|
-        a.ui.label class=category_color(category) href="##{category.parameterize}"
-          = category.upcase
-          .detail = jobs.length
-    | Jobs
-
+  h2.ui.medium.teal.dividing.header Jobs
+  .ui.small.horizontal.labels.actions
+    - @job_by_category.each do |category, jobs|
+      a.ui.label class=category_color(category) href="##{category.parameterize}"
+        = category.upcase
+        .detail = jobs.length
+        
   - @job_by_category.each do |category, jobs|
     .ui.small.faded.header id=category.parameterize
       = category.upcase
