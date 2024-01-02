@@ -9,6 +9,7 @@ module ApplicationHelper
     app_development: 'mobile alternate',
     marketing: 'envelope open text',
     social_media: 'instagram square',
+    live_meditations: 'dove',
   }.freeze
 
   CATEGORY_COLOR = {
